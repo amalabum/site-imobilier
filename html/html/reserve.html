@@ -1,0 +1,44 @@
+<?php  
+
+ try
+{
+$bdd = new PDO ('mysql:host=localhost;dbname=bweteta_imo', 'root', '');//echo "reussi";
+}
+catch (Exception $e)
+{
+die('Erreur : ' . $e->getMessage());
+echo "echoue";
+} 
+if (isset($_POST['send'])){
+ 	            
+ 	    $commune=htmlspecialchars($_POST['commune']);
+ 	    $quartier=htmlspecialchars($_POST['quartier']);
+ 	    $chambres=htmlspecialchars($_POST['chambres']);
+ 	    $prix=htmlspecialchars($_POST['prix']);
+ 	    $filesCount= count($_FILES['file']['name']);
+
+	for ($x=0; $x < $filesCount; $x++) { 
+		# code...
+	
+ $name = $_FILES['file']['name'][$x];
+ $size = $_FILES['file']['size'][$x];
+ $type = $_FILES['file']['type'][$x];
+ $tmp_name = $_FILES['file']['tmp_name'][$x];
+ $dir= "uploades/";
+
+
+ $maxSize= 1024*888800;
+
+ $accepted = $arrayName = array("text","pdf","PNG");
+
+ 	    
+            $incrementHC= $bdd->prepare(' INSERT into recherche_maison(commune,quartier,chambres
+,prix,images) values ("'.$commune.'","'.$quartier.'", "'.$chambres.'", "'.$prix.'", "'.$name.'") ');
+            $incrementHC->execute(); 
+      
+         echo "ok";
+
+
+}
+?>
+
